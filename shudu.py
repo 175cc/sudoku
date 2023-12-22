@@ -26,7 +26,7 @@ matrix_rows_and_columns = sudoku_square_grid_confirm
 
 def find_picture():
     """
-    使用OpenCV模板匹配找到小图在大图中的位置哦
+    使用OpenCV模板匹配找到小图在大图中的位置
     """
     # Step 1: 截图并保存到电脑
     os.system('adb shell screencap -p /sdcard/region_nextOne.png')
