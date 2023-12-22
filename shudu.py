@@ -1,15 +1,14 @@
 import copy
-import numpy as np
-import cv2
+import os
 import subprocess
 import time
-import OCR
-import pyautogui
-import os
+import cv2
 
-import sudo6  # 6宫格解决方案
-import sudo9  # 9宫格解决方案
+import OCR
 import cut_screenshot  # 截图&裁剪
+import sudo4
+import sudo6
+import sudo9
 
 # 游戏模式参数确认
 # 宫格
@@ -18,17 +17,11 @@ sudoku_square_grid_confirm = 9  # 4,6,9
 coord_convert_confirm = False  # True, False
 # 矩阵图形&坐标行列
 matrix_rows_and_columns = sudoku_square_grid_confirm
-# 创建一个字典，其中的键是数独大小，值是对应的模块名
-sudoku_modules = {
-    4: 'sudo4',
-    6: 'sudo6',
-    9: 'sudo9'
-}
 
 
 def find_picture():
     """
-    使用OpenCV模板匹配找到小图在大图中的位置
+    使用OpenCV模板匹配找到小图在大图中的位置哦
     """
     # Step 1: 截图并保存到电脑
     os.system('adb shell screencap -p /sdcard/region_nextOne.png')
@@ -81,22 +74,25 @@ def adb_click(coordinates_ma, ocr_ma, solution_ma):
         case 6:
             # 目标坐标点，根据数独的数字1-6
             target_coordinates = {
-                1: (100, 1630),
-                2: (270, 1630),
-                3: (440, 1630),
-                4: (610, 1630),
-                5: (780, 1630),
-                6: (950, 1630)
+                1: (130, 1800),
+                2: (300, 1630),
+                3: (470, 1630),
+                4: (640, 1630),
+                5: (810, 1630),
+                6: (980, 1630)
             }
         case 9:
-            # 目标坐标点，根据数独的数字1-6
+            # 目标坐标点，根据数独的数字1-9
             target_coordinates = {
-                1: (100, 1630),
-                2: (270, 1630),
-                3: (440, 1630),
-                4: (610, 1630),
-                5: (780, 1630),
-                6: (950, 1630)
+                1: (150, 1760),
+                2: (350, 1760),
+                3: (550, 1760),
+                4: (750, 1760),
+                5: (950, 1760),
+                6: (150, 1890),
+                7: (350, 1890),
+                8: (550, 1890),
+                9: (750, 1890)
             }
         case _:
             print("请确认数独矩阵分割图形&坐标行列确认： 4,6,9")
@@ -104,7 +100,6 @@ def adb_click(coordinates_ma, ocr_ma, solution_ma):
     # ////////////
 
     # 比较两个矩阵并执行ADB命令
-    print('12111111111')
     for i in range(matrix_rows_and_columns):
         for j in range(matrix_rows_and_columns):
             if ocr_ma[i][j] == 0 and solution_ma[i][j] != 0:
@@ -113,7 +108,7 @@ def adb_click(coordinates_ma, ocr_ma, solution_ma):
                 # 点击原始坐标
                 adb_tap_command = f"adb shell input swipe {x} {y} {x} {y} 56"
                 subprocess.run(adb_tap_command, shell=True)
-                # time.sleep(DELAY)  # 延时
+                time.sleep(DELAY)  # 延时
                 # 获取目标坐标
                 target_x, target_y = target_coordinates[solution_ma[i][j]]
                 # 点击目标坐标
@@ -123,11 +118,11 @@ def adb_click(coordinates_ma, ocr_ma, solution_ma):
 
 
 # 主函数
-def main(sudu_number):
+def main(sudoku_modules, sudu_number):
     # 截图取图，二值化
-    # cut_screenshot.get_convert_cut_screenshot()
+    cut_screenshot.get_convert_cut_screenshot()
     # 原始坐标矩阵
-    # coordinates_matrix = cut_screenshot.coordinate_matrix()
+    coordinates_matrix = cut_screenshot.coordinate_matrix()
     print('-----------------WAIT OCR----AVG 12s--------------------')
     # OCR识别结果矩阵
     ocr_matrix = OCR.padddleocr_result()
@@ -150,7 +145,7 @@ def main(sudu_number):
         print(solution_matrix)
 
     time.sleep(1)
-    # adb_click(coordinates_matrix, ocr_matrix, solution_matrix)
+    adb_click(coordinates_matrix, ocr_matrix, solution_matrix)
 
     time.sleep(0.3)
 
@@ -159,6 +154,13 @@ def main(sudu_number):
 
 
 if __name__ == '__main__':
+    # 创建一个字典，其中的键是数独大小，值是对应的模块名
+    sudoku_modules = {
+        4: 'sudo4',
+        6: 'sudo6',
+        9: 'sudo9'
+    }
+
     while True:
-        main(sudoku_square_grid_confirm)
+        main(sudoku_modules, sudoku_square_grid_confirm)
         break
