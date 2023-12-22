@@ -38,8 +38,8 @@ def split_image(image_path, rows, cols):
             lower = (i + 1) * block_height
 
             # 计算分割块的中心点坐标，起点补充(10, 215)
-            center_x = left + block_width // 2 + 10
-            center_y = upper + block_height // 2 + 215
+            center_x = left + block_width // 2 + 54
+            center_y = upper + block_height // 2 + 220
             centers.append((center_x, center_y))  # 将中心点坐标添加到列表中
 
             # 裁剪图片
