@@ -10,6 +10,9 @@ import sudo4
 import sudo6
 import sudo9
 
+"""
+cut_screenshot.py中的get_convert_cut_screenshot()函数的x, y, w, h需自行手动调整
+"""
 # 游戏模式参数确认
 # 宫格
 sudoku_square_grid_confirm = 9  # 4,6,9
