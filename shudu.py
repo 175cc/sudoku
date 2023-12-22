@@ -11,7 +11,9 @@ import sudo6
 import sudo9
 
 """
-cut_screenshot.py中的get_convert_cut_screenshot()函数的x, y, w, h需自行手动调整
+测试手机米12：2400*1080；app：全名数独
+cut_screenshot.py中的get_convert_cut_screenshot()函数的x, y, w, h需自行手动调整  
+另外split.py的split_image()函数的分割图center_x, center_y需自行手动调整-起点补充(同上x，y)(40行左右)
 """
 # 游戏模式参数确认
 # 宫格
