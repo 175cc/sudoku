@@ -64,7 +64,7 @@ def find_picture():
 def adb_click(coordinates_ma, ocr_ma, solution_ma):
     # 定义延时时间
     global target_coordinates
-    DELAY = 0.1
+    DELAY = 0.06  # 60ms
 
     # ////////////
     match sudoku_square_grid_confirm:
@@ -80,11 +80,11 @@ def adb_click(coordinates_ma, ocr_ma, solution_ma):
             # 目标坐标点，根据数独的数字1-6
             target_coordinates = {
                 1: (130, 1800),
-                2: (300, 1630),
-                3: (470, 1630),
-                4: (640, 1630),
-                5: (810, 1630),
-                6: (980, 1630)
+                2: (300, 1800),
+                3: (470, 1800),
+                4: (640, 1800),
+                5: (810, 1800),
+                6: (980, 1800)
             }
         case 9:
             # 目标坐标点，根据数独的数字1-9
@@ -144,7 +144,7 @@ def main(sudoku_modules, sudu_number):
 
     if solution_matrix is None:
         print("无解决方案，请确认OCR识别结果是否正确！")
-        # exit(1)  # 退出程序
+        exit(1)  # 退出程序
     else:
         print("解决方案：")
         print(solution_matrix)
@@ -167,5 +167,9 @@ if __name__ == '__main__':
     }
 
     while True:
-        main(sudoku_modules, sudoku_square_grid_confirm)
+        i = 24  # replace 10 with the number of times you want to run the function
+        for _ in range(i):
+            main(sudoku_modules, sudoku_square_grid_confirm)
+            #     输出当前运行第几次
+            print('输出当前运行第几次：', _ + 1)
         break
